@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: a2z
+    version: 1.0.0
+    group: popcorn
+    admin:
+      enabled: true
+      jmx-name: org.springframework.boot:type=Admin,name=SpringApplication
+  profiles:
+    active: ${ACTIVE_PROFILES:local}

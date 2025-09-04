@@ -1,0 +1,39 @@
+spring:
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    database: default
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:mydb
+    driver-class-name: org.h2.Driver
+    generate-unique-name: false
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+## Spring Boot actuator endpoints
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoint:
+    health:
+      group:
+        custom:
+          showComponents: always
+          showDetails: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
