@@ -1,0 +1,38 @@
+extend type Query {
+    users: UserQueryOperations
+}
+
+extend type Mutation {
+    users: UserMutationOperations
+}
+
+type UserQueryOperations {
+    getUserByUserId(userId: ID!): UserDTO
+    getAllUsers: [UserDTO]
+}
+
+type UserMutationOperations {
+    search: [UserDTO]
+}
+
+type UserDTO {
+    userEntityPK: UserEntityPK
+    username: String
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: String,
+    gender: Gender,
+    createdBy: String,
+    createdOn: String,
+    updatedBy: String,
+    updatedOn: String
+}
+
+type UserEntityPK {
+    userId: ID
+}
+
+enum Gender {
+    MALE, FEMALE, TRANSGENDER, UN_DISCLOSED
+}
