@@ -1,8 +1,8 @@
 spring:
   graphql:
     graphiql:
-      enabled: true
-      path: /graphiql
+      enabled: true        # Enable GraphiQL UI
+      path: /graphiql      # Path for GraphiQL
     http:
       path: /graphql
   jpa:

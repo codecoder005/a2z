@@ -62,20 +62,3 @@ input SearchOption {
     data: String
     searchStrategy: SearchStrategy
 }
-
-"""
-Represents the gender of a user.
-This enum is used in the User type and other related queries/mutations.
-"""
-enum Gender {
-    MALE, FEMALE, TRANSGENDER, UN_DISCLOSED
-}
-enum AddressType {
-    PERMANENT, COMMUNICATION, CURRENT
-}
-enum SortingOrder {
-    ASC, DESC
-}
-enum SearchStrategy {
-    EQUALS, NOT_EQUALS, LIKE, LESS_THAN, LESS_THAN_OR_EQUALS, GREATER_THAN, GREATER_THAN_OR_EQUALS
-}

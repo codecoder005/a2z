@@ -8,3 +8,65 @@ type Query {
 type Mutation {
 
 }
+
+"""
+Represents the gender of a user.
+This enum is used in the User type and other related queries/mutations.
+"""
+enum Gender {
+    MALE, FEMALE, TRANSGENDER, UN_DISCLOSED
+}
+
+"""
+Represents the type of address associated with a user.
+"""
+enum AddressType {
+    PERMANENT, COMMUNICATION, CURRENT
+}
+
+"""
+Represents the order in which results can be sorted.
+"""
+enum SortingOrder {
+    ASC, DESC
+}
+
+"""
+Represents the strategy used to filter or compare fields when searching users.
+"""
+enum SearchStrategy {
+    """
+    Exact match (e.g., field = value)
+    """
+    EQUALS
+
+    """
+    Not equal match (e.g., field != value)
+    """
+    NOT_EQUALS
+
+    """
+    Partial or pattern-based match (e.g., field LIKE '%value%')
+    """
+    LIKE
+
+    """
+    Checks if the field is less than the given value (e.g., field < value)
+    """
+    LESS_THAN
+
+    """
+    Checks if the field is less than or equal to the given value (e.g., field <= value)
+    """
+    LESS_THAN_OR_EQUALS
+
+    """
+    Checks if the field is greater than the given value (e.g., field > value)
+    """
+    GREATER_THAN
+
+    """
+    Checks if the field is greater than or equal to the given value (e.g., field >= value)
+    """
+    GREATER_THAN_OR_EQUALS
+}
