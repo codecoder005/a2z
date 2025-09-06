@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Collection<UserDTO> searchUsers(SearchUsersRequest searchUsersRequest) {
         log.info("UserServiceImpl::searchUsers");
-        return List.of();
+        return userRepository.findAll().stream()
+                .map(entity -> modelMapper.map(entity, UserDTO.class))
+                .toList();
     }
 }

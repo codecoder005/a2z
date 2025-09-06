@@ -14,7 +14,8 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalRestAPIControllerAdvice {
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ProblemDetail> handleException(Exception exception, WebRequest webRequest) {
-        log.error("GlobalRestAPIControllerAdvice::handleException");
+        log.error("GlobalRestAPIControllerAdvice::handleException message= {}", exception.getMessage());
+        exception.printStackTrace();
         ProblemDetail problemDetail = new ProblemDetailImpl();
         problemDetail.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
