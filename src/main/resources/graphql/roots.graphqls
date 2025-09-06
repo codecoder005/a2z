@@ -70,3 +70,12 @@ enum SearchStrategy {
     """
     GREATER_THAN_OR_EQUALS
 }
+
+enum BankAccountType {
+    BASIC_SAVINGS,
+    SAVINGS,
+    CURRENT,
+    SALARY,
+    LOAN,
+    OVERDRAFT
+}

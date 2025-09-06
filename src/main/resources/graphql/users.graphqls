@@ -25,6 +25,7 @@ type UserDTO {
     password: String,
     gender: Gender,
     address: Address
+    bankAccounts: [BankAccount]
 
     createdBy: String,
     createdOn: String,
@@ -44,6 +45,21 @@ type Address {
     country: String
     zipcode: String
     addressType: AddressType
+
+    createdBy: String,
+    createdOn: String,
+    updatedBy: String,
+    updatedOn: String
+}
+
+type BankAccount {
+    accountUuid: String
+    accountNo: String
+    nameAsPerBankAccount: String
+    ifsc: String
+    bankName: String
+    balance: Float
+    bankAccountType: BankAccountType
 
     createdBy: String,
     createdOn: String,

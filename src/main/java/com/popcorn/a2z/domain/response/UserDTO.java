@@ -1,11 +1,13 @@
 package com.popcorn.a2z.domain.response;
 
 import com.popcorn.a2z.entity.AddressEntity;
+import com.popcorn.a2z.entity.BankAccountEntity;
 import com.popcorn.a2z.entity.UserEntity;
 import com.popcorn.a2z.entity.UserEntityPK;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +24,7 @@ public class UserDTO {
     private UserEntity.Gender gender;
 
     private AddressEntity address;
+    private List<BankAccountEntity> bankAccounts;
 
     private String createdBy;
     private LocalDateTime createdOn;
