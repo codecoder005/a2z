@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.popcorn</groupId>
 	<artifactId>a2z</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>a2z</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -139,6 +139,24 @@
 					</excludes>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.11.3</version>
+                <configuration>
+                    <release>21</release>
+                    <excludePackageNames>com.popcorn.a2z.config.*</excludePackageNames>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-javadoc</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
