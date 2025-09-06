@@ -1,5 +1,6 @@
 package com.popcorn.a2z.controller.rest;
 
+import com.popcorn.a2z.domain.request.SearchUsersRequest;
 import com.popcorn.a2z.domain.response.UserDTO;
 import com.popcorn.a2z.restapi.UserRestAPI;
 import com.popcorn.a2z.service.UserService;
@@ -34,5 +35,13 @@ public class UserRestControllerV1 implements UserRestAPI {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getAllUsers());
+    }
+
+    @Override
+    public ResponseEntity<Collection<UserDTO>> searchUsers(SearchUsersRequest searchUsersRequest) {
+        log.info("UserRestControllerV1::searchUsers");
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(userService.searchUsers(searchUsersRequest));
     }
 }

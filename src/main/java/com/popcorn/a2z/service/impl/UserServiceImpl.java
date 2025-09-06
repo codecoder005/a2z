@@ -1,5 +1,6 @@
 package com.popcorn.a2z.service.impl;
 
+import com.popcorn.a2z.domain.request.SearchUsersRequest;
 import com.popcorn.a2z.domain.response.UserDTO;
 import com.popcorn.a2z.entity.UserEntityPK;
 import com.popcorn.a2z.exception.UserNotFoundException;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll()
                 .stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
+                .toList();
+    }
+
+    @Override
+    public Collection<UserDTO> searchUsers(SearchUsersRequest searchUsersRequest) {
+        log.info("UserServiceImpl::searchUsers");
+        return userRepository.findAll().stream()
+                .map(entity -> modelMapper.map(entity, UserDTO.class))
                 .toList();
     }
 }

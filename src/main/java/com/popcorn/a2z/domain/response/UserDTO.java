@@ -1,5 +1,6 @@
 package com.popcorn.a2z.domain.response;
 
+import com.popcorn.a2z.entity.AddressEntity;
 import com.popcorn.a2z.entity.UserEntity;
 import com.popcorn.a2z.entity.UserEntityPK;
 import lombok.*;
@@ -19,6 +20,8 @@ public class UserDTO {
     private String email;
     private String password;
     private UserEntity.Gender gender;
+
+    private AddressEntity address;
 
     private String createdBy;
     private LocalDateTime createdOn;

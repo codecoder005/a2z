@@ -15,14 +15,23 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class UserEntity extends AuditingBaseEntity{
     @EmbeddedId
     private UserEntityPK userEntityPK;
+
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
     private String firstName;
     private String lastName;
+
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AddressEntity address;
 
     public enum Gender {
         MALE,
