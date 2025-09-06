@@ -1,5 +1,6 @@
 package com.popcorn.a2z;
 
+import com.popcorn.a2z.entity.AddressEntity;
 import com.popcorn.a2z.entity.UserEntity;
 import com.popcorn.a2z.entity.UserEntityPK;
 import com.popcorn.a2z.repository.UserRepository;
@@ -20,6 +21,7 @@ public class A2ZApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
+            AddressEntity address = AddressEntity.builder().city("New York").addressType(AddressEntity.AddressType.PERMANENT).build();
             UserEntity userJohn = UserEntity.builder()
                     .userEntityPK(new UserEntityPK())
                     .username("john.doe")
@@ -28,7 +30,9 @@ public class A2ZApplication {
                     .email("john.doe@email.com")
                     .password("password")
                     .gender(UserEntity.Gender.MALE)
+                    .address(address)
                     .build();
+            address.setUser(userJohn);
             userRepository.saveAndFlush(userJohn);
         };
     }

@@ -30,6 +30,9 @@ public class UserEntity extends AuditingBaseEntity{
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AddressEntity address;
+
     public enum Gender {
         MALE,
         FEMALE,
