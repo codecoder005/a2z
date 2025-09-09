@@ -71,11 +71,37 @@ enum SearchStrategy {
     GREATER_THAN_OR_EQUALS
 }
 
+"""
+Represents the different types of bank accounts available in the system.
+"""
 enum BankAccountType {
-    BASIC_SAVINGS,
-    SAVINGS,
-    CURRENT,
-    SALARY,
-    LOAN,
+    """
+    Basic savings account with limited features, usually with a cap on deposits.
+    """
+    BASIC_SAVINGS
+
+    """
+    Standard savings account used for personal savings with interest benefits.
+    """
+    SAVINGS
+
+    """
+    Current account, generally used for business transactions with higher withdrawal limits.
+    """
+    CURRENT
+
+    """
+    Salary account where an employer credits the employee’s salary.
+    """
+    SALARY
+
+    """
+    Loan account used to track and manage loans taken from the bank.
+    """
+    LOAN
+
+    """
+    Overdraft account allowing withdrawal of more money than the account balance.
+    """
     OVERDRAFT
 }
