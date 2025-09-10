@@ -56,6 +56,11 @@ public class EnrollmentRequest {
     @NotEmpty(message = "'username' can not be empty")
     private String username;
 
+    @NotNull(message = "'password' can not be null")
+    @Pattern(
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
+            message = "'password' must be at least 8 characters long, contain upper & lowercase letters, a number, and a special character"
+    )
     private String password;
 
     @NotNull(message = "'firstName' can not be null")

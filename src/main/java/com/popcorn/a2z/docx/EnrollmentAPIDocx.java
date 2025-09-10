@@ -59,12 +59,14 @@ public interface EnrollmentAPIDocx extends EnrollmentAPI {
                                                       "gender": "FEMALE",
                                                       "dob": "1995-05-20",
                                                       "attendedOn": "2025-09-09",
-                                                      "travellingOn": "2025-09-10",
-                                                      "maturityDate": "2030-01-01",
+                                                      "travellingOn": "2035-09-10",
+                                                      "maturityDate": "2075-01-01",
                                                       "searchPattern": ".*",
                                                       "papers": [
-                                                        "Mathematics",
-                                                        "Physics"
+                                                        "Learning Dynamics of LLM Fine-tuning — Yi Ren, Danica Sutherland",
+                                                        "SAM 2: Segment Anything in Images and Videos — Nikhila Ravi",
+                                                        "Faster Cascades via Speculative Decoding — Harikrishna Narasimhan",
+                                                        "Transformers Learn Low Sensitivity Functions — Bhavya Vasudeva"
                                                       ],
                                                       "address": {
                                                         "addressLine1": "456 Elm Street",
@@ -142,12 +144,14 @@ public interface EnrollmentAPIDocx extends EnrollmentAPI {
                                               "gender": "FEMALE",
                                               "dob": "1995-05-20",
                                               "attendedOn": "2025-09-09",
-                                              "travellingOn": "2025-09-10",
-                                              "maturityDate": "2030-01-01",
+                                              "travellingOn": "2035-09-10",
+                                              "maturityDate": "2075-01-01",
                                               "searchPattern": ".*",
                                               "papers": [
-                                                "Mathematics",
-                                                "Physics"
+                                                "Learning Dynamics of LLM Fine-tuning — Yi Ren, Danica Sutherland",
+                                                "SAM 2: Segment Anything in Images and Videos — Nikhila Ravi",
+                                                "Faster Cascades via Speculative Decoding — Harikrishna Narasimhan",
+                                                "Transformers Learn Low Sensitivity Functions — Bhavya Vasudeva"
                                               ],
                                               "address": {
                                                 "addressLine1": "456 Elm Street",

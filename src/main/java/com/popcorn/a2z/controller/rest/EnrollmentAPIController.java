@@ -28,6 +28,6 @@ public class EnrollmentAPIController implements EnrollmentAPI, EnrollmentAPIDocx
         log.info("EnrollmentAPIController::enroll");
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new EnrollmentResponse());
+                .body(modelMapper.map(enrollmentRequest, EnrollmentResponse.class));
     }
 }
