@@ -48,7 +48,7 @@ public class A2ZApplication {
                     .build();
             address.setUser(userJohn);
             for(var bankAccount: bankAccounts) bankAccount.setUser(userJohn);
-            userRepository.saveAndFlush(userJohn);
+            //userRepository.saveAndFlush(userJohn);
         };
     }
 
