@@ -1,27 +1,33 @@
-# A2Z Project
+# 🚀 A2Z Project
 
-A2Z is a **Spring Boot–based application** designed to manage users efficiently.  
-It provides RESTful APIs to create, search, and retrieve users, along with a simple health check API.  
-This project uses **Spring Boot, Spring Data JPA, Lombok**, and follows clean architecture practices.
+A2Z is a **Spring Boot–based user and enrollment management system**.  
+It provides RESTful APIs for **user operations**, **flexible search**, and **enrollments**, along with a **health check API**.  
+The project uses **Spring Boot, Spring Data JPA, Lombok**, and follows **clean architecture** principles.
 
 ---
 
 ## ✨ Features
 
-- 📌 **User Management**
+- 👤 **User Management**
     - Retrieve a single user by ID
     - Fetch all users
-    - Search users with flexible filters (field, strategy, sorting)
+    - Search users with flexible filters
+
+- 📝 **Enrollment API**
+    - Validate and enroll new users with strict constraints
+    - Built-in support for validation annotations (`@NotNull`, `@Pattern`, `@Future`, etc.)
+    - Automatic mapping between DTOs
 
 - 🔎 **Search Options**
-    - Rich query support with `EQUALS`, `NOT_EQUALS`, `LIKE`, `LESS_THAN`, `GREATER_THAN`, etc.
-    - Sorting support (`ASC`, `DESC`)
+    - Operators: `EQUALS`, `NOT_EQUALS`, `LIKE`, `LESS_THAN`, `GREATER_THAN`
+    - Sorting: `ASC` / `DESC`
 
 - 🩺 **Health Check**
     - `/ping` endpoint to verify service availability
 
 - ⚡ **Exception Handling**
-    - Custom exceptions (`AppException`, `UserNotFoundException`) for clearer error reporting
+    - `AppException`, `UserNotFoundException` for clear error reporting
+    - Errors returned as **Problem Details JSON**
 
 ---
 
@@ -31,9 +37,11 @@ This project uses **Spring Boot, Spring Data JPA, Lombok**, and follows clean ar
 a2z
  ├── domain
  │   ├── request
- │   │   └── SearchUsersRequest.java
+ │   │   ├── SearchUsersRequest.java
+ │   │   └── EnrollmentRequest.java
  │   ├── response
  │   │   ├── UserDTO.java
+ │   │   ├── EnrollmentResponse.java
  │   │   └── PingAPIResponse.java
  │   └── model
  │       ├── UserEntity.java
@@ -48,7 +56,8 @@ a2z
  │
  ├── controller
  │   ├── UserRestAPI.java
- │   └── PingAPI.java
+ │   ├── PingAPI.java
+ │   └── EnrollmentAPIController.java
  │
  ├── enums
  │   ├── SearchStrategy.java
@@ -59,25 +68,71 @@ a2z
 
 ---
 
-## 📚 Domain Model
+## 📚 Domain Models
+
+### `EnrollmentRequest`
+Represents a user enrollment request with validation constraints.
+
+**Key fields:**
+- `isChallenged`, `isSalaried` → Boolean flags (`@AssertFalse`, `@AssertTrue`)
+- `age`, `height`, `weight`, `salary`, `revenue` → Numeric with limits
+- `email`, `username`, `password`
+- `dob`, `attendedOn`, `travellingOn`, `maturityDate`
+- `searchPattern`
+- `papers` (non-empty list)
+- `EnrollmentAddress`
+
+**Example:**
+```json
+{
+  "isChallenged": false,
+  "isSalaried": true,
+  "age": 25,
+  "height": 175,
+  "weight": 70.5,
+  "salary": 25000,
+  "revenue": 1500000,
+  "email": "jdoe@example.com",
+  "username": "jdoe",
+  "password": "StrongPass@123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "gender": "MALE",
+  "dob": "2000-01-15",
+  "attendedOn": "2025-09-01",
+  "travellingOn": "2025-09-20",
+  "maturityDate": "2026-09-10",
+  "searchPattern": ".*",
+  "papers": ["ID_PROOF", "ADDRESS_PROOF"],
+  "address": {
+    "addressLine1": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "country": "USA",
+    "zipcode": "10001",
+    "addressType": "PERMANENT"
+  }
+}
+```
+
+---
+
+### `EnrollmentResponse`
+Represents the outcome of an enrollment request.
+- Contains validated and mapped fields from `EnrollmentRequest`
+
+---
 
 ### `UserDTO`
-Represents a user in the system.  
-Contains identity, profile, and audit fields:
-- `userEntityPK`
-- `username`, `firstName`, `lastName`, `email`, `password`
-- `gender`
-- `createdBy`, `createdOn`, `updatedBy`, `updatedOn`
+Represents a persisted user.
+- Identity: `userEntityPK`
+- Profile: `username`, `firstName`, `lastName`, `email`, `gender`
+- Audit: `createdBy`, `createdOn`, `updatedBy`, `updatedOn`
 
 ---
 
 ### `SearchUsersRequest`
-Allows flexible searching of users.
-- `searchOptions` → List of field-based conditions
-- `sortBy` → Field to sort by (default: `userId`)
-- `sortingOrder` → ASC / DESC
-
-#### Example Search
+Flexible user search query.
 ```json
 {
   "searchOptions": [
@@ -106,7 +161,25 @@ Allows flexible searching of users.
 
 ---
 
-### 2. **Get User by ID**
+### 2. **Enrollment API**
+- **Endpoint:** `POST /enroll`
+- **Request:** `EnrollmentRequest`
+- **Response (201 Created):**
+```json
+{
+  "username": "jdoe",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "jdoe@example.com",
+  "gender": "MALE",
+  "dob": "2000-01-15",
+  "maturityDate": "2026-09-10"
+}
+```
+
+---
+
+### 3. **Get User by ID**
 - **Endpoint:** `GET /api/v1/users/{userId}`
 - **Response:**
 ```json
@@ -122,13 +195,13 @@ Allows flexible searching of users.
 
 ---
 
-### 3. **Get All Users**
-- **Endpoint:** `GET /api/users/v1`
+### 4. **Get All Users**
+- **Endpoint:** `GET /api/v1/users`
 - **Response:** List of `UserDTO`
 
 ---
 
-### 4. **Search Users**
+### 5. **Search Users**
 - **Endpoint:** `POST /search`
 - **Request Body:** `SearchUsersRequest`
 - **Response:** Filtered list of `UserDTO`
@@ -137,9 +210,20 @@ Allows flexible searching of users.
 
 ## ⚠️ Exception Handling
 
-- `AppException` → Base class for application-level errors
-- `UserNotFoundException` → Raised when a user is missing
-- All errors are returned as **Problem Details JSON** with HTTP status codes.
+- `AppException` → Application-level errors
+- `UserNotFoundException` → Missing user case
+- **Validation errors** → Returned as `400 Bad Request` with field-specific messages
+
+Example error:
+```json
+{
+  "type": "about:blank",
+  "title": "Bad Request",
+  "status": 400,
+  "detail": "'age' should not be less than 18",
+  "instance": "/enroll"
+}
+```
 
 ---
 
@@ -147,19 +231,19 @@ Allows flexible searching of users.
 
 - **Java 21+**
 - **Spring Boot 3.5.5+**
-- **Spring Data JPA**
-- **Hibernate**
+- **Spring Data JPA + Hibernate**
 - **Lombok**
 - **Maven**
+- **ModelMapper**
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Java 17+
+- Java 21+
 - Maven 3.9+
-- Database (e.g., PostgreSQL / MySQL)
+- PostgreSQL / MySQL
 
 ### Build & Run
 ```bash
@@ -171,16 +255,17 @@ mvn spring-boot:run
 ```
 
 ### Access APIs
-- Swagger / OpenAPI: `http://localhost:8080/swagger-ui.html`
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
 - Health Check: `http://localhost:8080/ping`
 
 ---
 
 ## 🧑‍💻 Developer Notes
 
-- Use `mvn javadoc:javadoc` to generate JavaDocs (`target/site/apidocs`)
-- Follow branch naming convention: `feature/JIRA-123-description`
-- Unit tests and integration tests should cover:
+- Run `mvn javadoc:javadoc` for API docs (`target/site/apidocs`)
+- Branch naming: `feature/JIRA-123-description`
+- Tests should cover:
+    - Enrollment validation
     - User retrieval
     - Search queries
     - Exception handling
@@ -189,4 +274,4 @@ mvn spring-boot:run
 
 ## 📜 License
 
-This project is licensed under the MIT License – feel free to use and modify it.
+Licensed under the **MIT License** – free to use and modify.  

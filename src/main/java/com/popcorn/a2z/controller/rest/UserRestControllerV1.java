@@ -1,5 +1,6 @@
 package com.popcorn.a2z.controller.rest;
 
+import com.popcorn.a2z.docx.UserRestAPIDocx;
 import com.popcorn.a2z.domain.request.SearchUsersRequest;
 import com.popcorn.a2z.domain.response.UserDTO;
 import com.popcorn.a2z.restapi.UserRestAPI;
@@ -18,7 +19,7 @@ import java.util.Collection;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Slf4j
-public class UserRestControllerV1 implements UserRestAPI {
+public class UserRestControllerV1 implements UserRestAPI, UserRestAPIDocx {
     private final UserService userService;
 
     @Override

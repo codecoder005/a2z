@@ -1,0 +1,50 @@
+query getAllUsers {
+    users {
+        getAllUsers {
+            ...userDTOFragment
+        }
+    }
+}
+
+fragment userDTOFragment on UserDTO {
+    userEntityPK {
+        userId
+    }
+    username
+    email
+    firstName
+    gender
+    lastName
+    password
+    createdBy
+    createdOn
+    updatedBy
+    updatedOn
+    bankAccounts {
+        accountUuid
+        accountNo
+        ifsc
+        nameAsPerBankAccount
+        bankName
+        bankAccountType
+        balance
+        createdBy
+        createdOn
+        updatedBy
+        updatedOn
+    }
+    address {
+        userEntityPK {
+            userId
+        }
+        city
+        state
+        country
+        zipcode
+        addressType
+        createdBy
+        createdOn
+        updatedBy
+        updatedOn
+    }
+}

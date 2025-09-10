@@ -6,11 +6,35 @@ extend type Mutation {
     users: UserMutationOperations
 }
 
+"""
+Defines the available user-related query operations
+that can be executed in the GraphQL API.
+"""
 type UserQueryOperations {
+    """
+    Fetch a single user by their unique user ID.
+
+    - `userId`: The numeric identifier of the user.
+    - Returns: A `UserDTO` object if found, otherwise `null`.
+    """
     getUserByUserId(userId: Int!): UserDTO
+
+    """
+    Retrieve all users present in the system.
+
+    - Returns: A list of `UserDTO` objects.
+    """
     getAllUsers: [UserDTO]
+
+    """
+    Search for users using advanced filtering and sorting criteria.
+
+    - `searchUsersRequest`: An input object that defines search conditions, sorting field, and order.
+    - Returns: A list of `UserDTO` objects that match the search criteria.
+    """
     searchUsers(searchUsersRequest: SearchUsersRequest!): [UserDTO]
 }
+
 
 type UserMutationOperations {
     search: [UserDTO]
@@ -25,6 +49,7 @@ type UserDTO {
     password: String,
     gender: Gender,
     address: Address
+    bankAccounts: [BankAccount]
 
     createdBy: String,
     createdOn: String,
@@ -32,7 +57,14 @@ type UserDTO {
     updatedOn: String
 }
 
+"""
+Represents the primary key for a User entity.
+This uniquely identifies a user in the system.
+"""
 type UserEntityPK {
+    """
+    Unique identifier for the user.
+    """
     userId: ID
 }
 
@@ -51,14 +83,66 @@ type Address {
     updatedOn: String
 }
 
+"""
+Represents a bank account belonging to a user.
+Each account has an identifier, type, and related details.
+"""
+type BankAccount {
+    accountUuid: String
+    accountNo: String
+    nameAsPerBankAccount: String
+    ifsc: String
+    bankName: String
+    balance: Float
+    bankAccountType: BankAccountType
+
+    createdBy: String,
+    createdOn: String,
+    updatedBy: String,
+    updatedOn: String
+}
+
+"""
+Defines the structure for performing user search queries.
+Supports multiple search conditions, sorting, and order of results.
+"""
 input SearchUsersRequest {
+    """
+    A list of search conditions to filter users.
+    Each condition specifies a field, a value, and a strategy.
+    """
     searchOptions: [SearchOption]
+
+    """
+    The field name to sort the results by (e.g., 'userId', 'username', 'createdOn').
+    """
     sortBy: String
+
+    """
+    The order in which results should be sorted: ASC for ascending, DESC for descending.
+    """
     sortingOrder: SortingOrder
 }
 
+
+"""
+Represents a single search condition when filtering user data.
+Multiple search options can be combined to perform complex queries.
+"""
 input SearchOption {
+    """
+    The name of the field to search on (e.g., 'username', 'email', 'createdOn').
+    """
     field: String
+
+    """
+    The value to search for. Its meaning depends on the selected search strategy.
+    """
     data: String
+
+    """
+    The strategy used to compare the field against the data value.
+    Examples include EQUALS, LIKE, GREATER_THAN, etc.
+    """
     searchStrategy: SearchStrategy
 }
