@@ -37,6 +37,8 @@ public class EnrollmentResponse {
 
     private EnrollmentAddress address;
 
+    private List<Integer> ranks;
+
     public enum Gender {
         MALE, FEMALE, TRANSGENDER, UNDISCLOSED
     }
