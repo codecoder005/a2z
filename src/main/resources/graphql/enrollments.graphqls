@@ -1,0 +1,83 @@
+extend type Mutation {
+    enrollments: EnrollmentMutationOperations
+}
+
+type EnrollmentMutationOperations {
+    enroll(request: EnrollmentRequest!): EnrollmentResponse
+}
+
+input EnrollmentRequest {
+    isChallenged: Boolean!
+    isSalaried: Boolean!
+    age: Int!
+    height: Int!
+    weight: Float!
+    salary: Float!
+    revenue: String
+    email: String!
+    username: String!
+    password: String!
+    firstName: String!
+    lastName: String
+    gender: Gender
+    dob: String!
+    attendedOn: String!
+    travellingOn: String!
+    maturityString: String!
+    searchPattern: String!
+    papers: [String!]!
+    address: EnrollmentAddressInput!
+    ranks: [Int!]!
+}
+
+input EnrollmentAddressInput {
+    addressLine1: String!
+    addressLine2: String
+    landmark: String
+    city: String!
+    state: String!
+    country: String!
+    zipcode: String!
+    addressType: EnrollmentAddressType
+}
+
+type EnrollmentAddress {
+    addressLine1: String!
+    addressLine2: String
+    landmark: String
+    city: String!
+    state: String!
+    country: String!
+    zipcode: String!
+    addressType: EnrollmentAddressType
+}
+
+enum EnrollmentAddressType {
+    PERMANENT
+    COMMUNICATION
+    CURRENT
+}
+
+type EnrollmentResponse {
+    isChallenged: Boolean
+    isSalaried: Boolean
+    age: Int
+    height: Int
+    weight: Float
+    salary: Float
+    revenue: String
+    email: String
+    username: String
+    password: String
+    firstName: String
+    lastName: String
+    gender: Gender
+    dob: String
+    attendedOn: String
+    travellingOn: String
+    maturityString: String
+    searchPattern: String
+    papers: [String]
+    address: EnrollmentAddress
+    ranks: [Int]
+}
