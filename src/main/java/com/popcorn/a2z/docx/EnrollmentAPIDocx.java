@@ -77,7 +77,8 @@ public interface EnrollmentAPIDocx extends EnrollmentAPI {
                                                         "country": "USA",
                                                         "zipcode": "90001",
                                                         "addressType": "CURRENT"
-                                                      }
+                                                      },
+                                                      "ranks": [9,15]
                                                     }
                                                     """
                                     )
@@ -162,7 +163,8 @@ public interface EnrollmentAPIDocx extends EnrollmentAPI {
                                                 "country": "USA",
                                                 "zipcode": "90001",
                                                 "addressType": "CURRENT"
-                                              }
+                                              },
+                                              "ranks": [9,15]
                                             }
                                             """
                             )}
@@ -214,5 +216,5 @@ public interface EnrollmentAPIDocx extends EnrollmentAPI {
                     }
             )
     )
-    ResponseEntity<EnrollmentResponse> enroll(EnrollmentRequest enrollmentRequest);
+    ResponseEntity<EnrollmentResponse> enroll(String countryId, String sortBy, SortingOrder sortingOrder, EnrollmentRequest.Gender gender, String clientId, String ipAddress, EnrollmentRequest enrollmentRequest);
 }

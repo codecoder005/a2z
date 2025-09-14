@@ -90,12 +90,16 @@ public class EnrollmentRequest {
 
     @NotNull(message = "'papers' can not be null")
     @NotEmpty(message = "'papers' can not be empty")
-    @Size(min = 1, message = "'papers' can not be empty. min 1 required")
+    @Size(min = 1, message = "'papers' can not be empty. at least 1 required")
     private List<String> papers;
 
     @NotNull(message = "'address' can not be null")
     @Valid
     private EnrollmentAddress address;
+
+    @NotNull(message = "'ranks' can not be null")
+    @Size(min = 1, message = "'ranks' can not be empty. at least 1 required")
+    private List<@Min(value = 1) Integer> ranks;
 
     public enum Gender {
         MALE, FEMALE, TRANSGENDER, UNDISCLOSED

@@ -1,4 +1,13 @@
 spring:
+  cloud:
+    openfeign:
+      client:
+        refresh-enabled: true
+        config:
+          json-placeholder-client:
+            connectTimeout: 2000   # ms
+            readTimeout: 5000      # ms
+            loggerLevel: FULL      # NONE, BASIC, HEADERS, FULL
   graphql:
     graphiql:
       enabled: true        # Enable GraphiQL UI
@@ -22,6 +31,24 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password: sa
+    hikari:
+      pool-name: A2ZHikariPool
+      maximum-pool-size: 64 # Tuned based on DB server cores
+      minimum-idle: 32     # Half of max pool size for a balance
+      connection-timeout: 5000 # Shorten to fail fast (5 seconds)
+      idle-timeout: 600000   # 10 minutes
+      max-lifetime: 1770000  # A little shorter than default, to avoid network issues (29.5 minutes)
+      leak-detection-threshold: 30000 # 30 seconds
+
+      # Additional production-grade properties
+      validation-timeout: 5000   # Timeout for connection validation (5 seconds)
+      connection-test-query: "SELECT 1" # A lightweight query to validate connections
+      auto-commit: false # Crucial for transaction management
+      read-only: false # Default, but good to be explicit
+      isolate-internal-queries: true # A performance optimization
+      # Optional logging/monitoring properties
+      health-check-properties:
+        health-check-period: 30000 # Check pool health every 30 seconds
   h2:
     console:
       enabled: true
@@ -35,14 +62,18 @@ management:
       probability: 1.0
   endpoint:
     health:
-      group:
-        custom:
-          showComponents: always
-          showDetails: always
+      show-components: always
+      show-details: always
+    circuitbreakers:
+      enabled: true
   endpoints:
     web:
       exposure:
         include: '*'
+  health:
+    circuitbreakers:
+      enabled: true
+
 logging:
   level:
     org:

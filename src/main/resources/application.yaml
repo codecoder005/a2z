@@ -8,3 +8,56 @@ spring:
       jmx-name: org.springframework.boot:type=Admin,name=SpringApplication
   profiles:
     active: ${ACTIVE_PROFILES:local}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowType: TIME_BASED       # use a time window instead of raw call count
+        slidingWindowSize: 60               # evaluate last 60s of calls
+        minimumNumberOfCalls: 20            # don’t evaluate until at least 20 calls collected
+        permittedNumberOfCallsInHalfOpenState: 5
+        waitDurationInOpenState: 30s        # stay open for 30s before half-open trial
+        failureRateThreshold: 50            # open if >50% calls fail
+        slowCallRateThreshold: 50           # open if >50% are slow
+        slowCallDurationThreshold: 2s       # SLA = 2s
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        recordExceptions:
+          - feign.RetryableException
+          - java.io.IOException
+          - org.springframework.web.client.ResourceAccessException
+          - org.springframework.web.client.HttpServerErrorException
+          - feign.FeignException$ServiceUnavailable
+          - feign.FeignException$InternalServerError
+        ignoreExceptions:                   # these should *not* trip the CB
+          - feign.FeignException$BadRequest
+          - feign.FeignException$NotFound
+    instances:
+      cb-getAllPosts:
+        baseConfig: default
+      cb-getPostById:
+        baseConfig: default
+  retry:
+    configs:
+      default:
+        maxAttempts: 3                      # 1 initial + 2 retries
+        waitDuration: 500ms                 # base wait
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2     # 0.5s → 1s → 2s
+        exponentialMaxWaitDuration: 5s      # cap backoff
+        retryExceptions:
+          - feign.RetryableException
+          - java.io.IOException
+          - org.springframework.web.client.ResourceAccessException
+          - org.springframework.web.client.HttpServerErrorException
+          - feign.FeignException$ServiceUnavailable
+          - feign.FeignException$InternalServerError
+        ignoreExceptions:
+          - feign.FeignException$BadRequest
+          - feign.FeignException$NotFound
+    instances:
+      retry-getAllPosts:
+        baseConfig: default
+      retry-getPostById:
+        baseConfig: default
