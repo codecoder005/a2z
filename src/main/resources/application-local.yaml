@@ -1,4 +1,13 @@
 spring:
+  cloud:
+    openfeign:
+      client:
+        refresh-enabled: true
+        config:
+          json-placeholder-client:
+            connectTimeout: 2000   # ms
+            readTimeout: 5000      # ms
+            loggerLevel: FULL      # NONE, BASIC, HEADERS, FULL
   graphql:
     graphiql:
       enabled: true        # Enable GraphiQL UI
@@ -37,10 +46,16 @@ management:
     health:
       show-components: always
       show-details: always
+    circuitbreakers:
+      enabled: true
   endpoints:
     web:
       exposure:
         include: '*'
+  health:
+    circuitbreakers:
+      enabled: true
+
 logging:
   level:
     org:
@@ -48,3 +63,4 @@ logging:
         web:
           filter:
             CommonsRequestLoggingFilter: DEBUG
+    root: debug
