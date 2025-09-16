@@ -1,0 +1,36 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - C:\Users\ramak\Downloads\version-control\popcorn\a2z\src\main\resources\prometheus\prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - C:\Users\ramak\Downloads\version-control\popcorn\a2z\src\main\resources\prometheus\one_rule.yml:/etc/prometheus/one_rule.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - a2z_monitoring
+
+  # Grafana Dashboard IDs: 12900, 4701
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - C:\Users\ramak\Downloads\version-control\popcorn\a2z\src\main\resources\grafana\provisioning:/etc/grafana/provisioning
+      - C:\Users\ramak\Downloads\version-control\popcorn\a2z\src\main\resources\grafana\dashboards:/etc/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - a2z_monitoring
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  a2z_monitoring:
+    driver: bridge

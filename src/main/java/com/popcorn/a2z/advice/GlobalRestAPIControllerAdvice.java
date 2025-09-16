@@ -33,7 +33,7 @@ public class GlobalRestAPIControllerAdvice {
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ProblemDetail> handleBindException(BindException exception) {
-        log.error("GlobalRestAPIControllerAdvice::BindException {}", exception.getMessage());
+        log.error("GlobalRestAPIControllerAdvice::handleBindException {}", exception.getMessage());
         ProblemDetailImpl problemDetail = new ProblemDetailImpl();
         Map<String, Object> errors = new LinkedHashMap<>();
         exception.getBindingResult().getAllErrors().forEach((error) -> {
