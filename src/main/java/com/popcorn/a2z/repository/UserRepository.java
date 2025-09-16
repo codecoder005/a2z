@@ -1,8 +1,14 @@
 package com.popcorn.a2z.repository;
 
+import com.popcorn.a2z.entity.AddressEntity;
 import com.popcorn.a2z.entity.UserEntity;
 import com.popcorn.a2z.entity.UserEntityPK;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * {@code UserRepository} is the primary Data Access Layer (DAL)
@@ -55,5 +61,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * }</pre>
  */
 public interface UserRepository extends JpaRepository<UserEntity, UserEntityPK> {
-
+    @Query(value = """
+    select user from UserEntity user
+    where user.address.addressType = :addressType
+    """)
+    Optional<List<UserEntity>> findByAddressType(@Param(value = "addressType") AddressEntity.AddressType addressType);
 }

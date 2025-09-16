@@ -20,9 +20,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        format_sql: false
+#        format_sql: true
     database: default
-    show-sql: true
+#    show-sql: true
     hibernate:
       ddl-auto: create
   datasource:
@@ -54,18 +54,27 @@ spring:
       enabled: true
       settings:
         web-allow-others: true
+  docker:
+    compose:
+      lifecycle-management: start_only
 
 ## Spring Boot actuator endpoints
 management:
   tracing:
     sampling:
       probability: 1.0
+    enabled: true
   endpoint:
     health:
       show-components: always
       show-details: always
+      access: unrestricted
     circuitbreakers:
       enabled: true
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
   endpoints:
     web:
       exposure:
@@ -73,6 +82,10 @@ management:
   health:
     circuitbreakers:
       enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 logging:
   level:

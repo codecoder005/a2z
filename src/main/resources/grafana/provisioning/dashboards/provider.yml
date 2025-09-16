@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'default'              # arbitrary name
+    orgId: 1
+    folder: ''                   # empty = General folder
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/dashboards

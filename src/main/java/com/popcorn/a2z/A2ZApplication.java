@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
@@ -53,6 +54,11 @@ public class A2ZApplication {
             address.setUser(userJohn);
             for(var bankAccount: bankAccounts) bankAccount.setUser(userJohn);
             userRepository.saveAndFlush(userJohn);
+
+            Optional<List<UserEntity>> permanentAddressUsers = userRepository.findByAddressType(AddressEntity.AddressType.PERMANENT);
+            if(permanentAddressUsers.isPresent() && permanentAddressUsers.get().getFirst() != null) {
+                System.out.println(permanentAddressUsers.get().getFirst().getFirstName());
+            }
         };
     }
 
