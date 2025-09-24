@@ -45,7 +45,7 @@ public class ScheduleJobs {
      * <p>Note: Requires {@code @EnableScheduling} annotation on a configuration class
      * to activate scheduled task processing.
      */
-    @Scheduled(fixedRate = 10, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedRate = 5, timeUnit = TimeUnit.MINUTES)
     public void sendHeartBeatsIPInfoIOAtFixedRate5Minutes() {
         log.info("ScheduleJobs::sendHeartBeatsIPInfoIOAtFixedRate5Minutes started");
         RestClient restClient = RestClient.builder().baseUrl("https://ipinfo.io").build(); // Base URL for IPInfo.io
@@ -55,7 +55,7 @@ public class ScheduleJobs {
                     .acceptCharset(StandardCharsets.UTF_8)
                     .retrieve()
                     .body(IPInfoIOResponse.class);
-            log.info("ScheduleJobs::sendHeartBeatsIPInfoIOAtFixedRate5Minutes completed with response: " + jsonHelper.toJson(ipInfoIOResponse));
+            log.info("ScheduleJobs::sendHeartBeatsIPInfoIOAtFixedRate5Minutes completed with response: {}", jsonHelper.toJson(ipInfoIOResponse));
         }catch (RestClientException exception) {
             log.error("Error occurred while running schedule sendHeartBeatsIPInfoIOAtFixedRate5Minutes");
             exception.printStackTrace();

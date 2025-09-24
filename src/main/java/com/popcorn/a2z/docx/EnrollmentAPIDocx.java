@@ -96,14 +96,14 @@ public interface EnrollmentAPIDocx extends EnrollmentAPI {
                                     """
                     ),
                     @Parameter(
-                            name = "sortBy", required = true, in = ParameterIn.QUERY, example = "John",
+                            name = "sortBy", required = true, in = ParameterIn.QUERY, example = "name",
                             schema = @Schema(implementation = String.class, title = "sortBy"),
-                            description = ""
+                            description = "Specifies the field to sort the results by. Supported values include: 'name', 'age', 'createdDate', etc."
                     ),
                     @Parameter(
                             name = "sortingOrder", required = false, in = ParameterIn.QUERY, example = "ASC",
                             schema = @Schema(implementation = SortingOrder.class, title = "sortingOrder"),
-                            description = ""
+                            description = "Specifies the direction of sorting. Default is 'ASC'."
                     ),
                     @Parameter(
                             name = "gender", required = true, in = ParameterIn.QUERY, example = "UNDISCLOSED",
