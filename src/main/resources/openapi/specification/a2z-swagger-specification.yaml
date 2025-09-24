@@ -1,0 +1,757 @@
+openapi: 3.1.0
+info:
+  title: Swagger API Docx
+  description: |
+    Swagger API Docx Documentation
+
+    Copyright [2024] [Ramakrishna Janapureddy]
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+  termsOfService: ' https://www.apache.org/licenses/LICENSE-2.0 '
+  contact:
+    name: Ramakrishna Janapureddy
+    url: https://github.com/codecoder005
+    email: developer.raakhi005@gmail.com
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local
+  - url: http://13.201.228.185:8080
+    description: Development
+  - url: http://localhost:8080
+    description: Test
+  - url: http://15.206.151.118:8080
+    description: Production
+paths:
+  /api/v1/users/search:
+    post:
+      tags:
+        - user-rest-controller-v-1
+      operationId: searchUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchUsersRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDTO"
+  /api/v1/enrollments/{countryId}:
+    post:
+      tags:
+        - EnrollmentAPI
+      summary: Enrollment related APIs
+      description: This endpoint allows the creation of a new user. The request should
+        include the necessary details for creating a user.
+      externalDocs:
+        description: Find more details on the API usage
+        url: https://example.com/api-docs/user-management
+        x-support:
+          phone: +1-800-123-4567
+          contact: support@example.com
+        x-api-version:
+          version: 1.0
+      operationId: 8beeb49f-9beb-4862-b36a-b889b45ed908
+      parameters:
+        - name: countryId
+          in: path
+          description: |
+            A unique identifier representing the country where the user is being created.
+            This is typically a country code (e.g., 'USA', 'IN').
+          required: true
+          schema:
+            type: string
+            title: Country Identifier
+          example: USA
+        - name: sortBy
+          in: query
+          required: true
+          schema:
+            type: string
+            title: sortBy
+          example: John
+        - name: sortingOrder
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+            title: sortingOrder
+          example: ASC
+        - name: gender
+          in: query
+          description: Gender of the candidate
+          required: true
+          schema:
+            type: string
+            enum:
+              - MALE
+              - FEMALE
+              - TRANSGENDER
+              - UNDISCLOSED
+            title: Gender
+          example: UNDISCLOSED
+        - name: client-id
+          in: header
+          description: A required header used to know who is calling this API.
+          required: true
+          schema:
+            type: string
+            title: Client-Id
+          example: A1234567
+        - name: ip-address
+          in: header
+          description: An optional header used to specify the type of channel.
+          required: false
+          schema:
+            type: string
+            title: Channel-Type
+          example: 10.10.10.10
+      requestBody:
+        description: Payload containing user details for creating a new user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnrollmentRequest"
+            examples:
+              EnrollmentRequest:
+                summary: Sample EnrollmentRequest
+                description: Example request to enroll a new user with basic details
+                value:
+                  isChallenged: false
+                  isSalaried: true
+                  age: 28
+                  height: 175
+                  weight: 72.35
+                  salary: 55000.0
+                  revenue: 2500000.0
+                  email: jane.doe@example.com
+                  username: jane_doe
+                  password: StrongP@ssw0rd!
+                  firstName: Jane
+                  lastName: Doe
+                  gender: FEMALE
+                  dob: 1995-05-20
+                  attendedOn: 2025-09-09
+                  travellingOn: 2035-09-10
+                  maturityDate: 2075-01-01
+                  searchPattern: .*
+                  papers:
+                    - "Learning Dynamics of LLM Fine-tuning — Yi Ren, Danica Sutherland"
+                    - "SAM 2: Segment Anything in Images and Videos — Nikhila Ravi"
+                    - Faster Cascades via Speculative Decoding — Harikrishna Narasimhan
+                    - Transformers Learn Low Sensitivity Functions — Bhavya Vasudeva
+                  address:
+                    addressLine1: 456 Elm Street
+                    addressLine2: Suite 12C
+                    landmark: Near City Mall
+                    city: Los Angeles
+                    state: CA
+                    country: USA
+                    zipcode: "90001"
+                    addressType: CURRENT
+                  ranks:
+                    - 9
+                    - 15
+        required: true
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnrollmentResponse"
+              examples:
+                EnrollmentResponse:
+                  summary: Sample EnrollmentResponse
+                  description: Example response for enroll a new user with basic details
+                  value:
+                    isChallenged: false
+                    isSalaried: true
+                    age: 28
+                    height: 175
+                    weight: 72.35
+                    salary: 55000.0
+                    revenue: 2500000.0
+                    email: jane.doe@example.com
+                    username: jane_doe
+                    password: StrongP@ssw0rd!
+                    firstName: Jane
+                    lastName: Doe
+                    gender: FEMALE
+                    dob: 1995-05-20
+                    attendedOn: 2025-09-09
+                    travellingOn: 2035-09-10
+                    maturityDate: 2075-01-01
+                    searchPattern: .*
+                    papers:
+                      - "Learning Dynamics of LLM Fine-tuning — Yi Ren, Danica Sutherland"
+                      - "SAM 2: Segment Anything in Images and Videos — Nikhila Ravi"
+                      - Faster Cascades via Speculative Decoding — Harikrishna Narasimhan
+                      - Transformers Learn Low Sensitivity Functions — Bhavya Vasudeva
+                    address:
+                      addressLine1: 456 Elm Street
+                      addressLine2: Suite 12C
+                      landmark: Near City Mall
+                      city: Los Angeles
+                      state: CA
+                      country: USA
+                      zipcode: "90001"
+                      addressType: CURRENT
+                    ranks:
+                      - 9
+                      - 15
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        "401":
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        "503":
+          description: service unavailable
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                exception detail response:
+                  description: "Example of an error response when the service is unavailable.\
+                    \ The 'status' field indicates the HTTP status code, 'message'\
+                    \ provides a description of the error, and 'timestamp' records\
+                    \ when the error occurred."
+                  value:
+                    status: 503
+                    message: Internal server error
+                    timestamp: 2024-11-15T19:33:52.955Z
+          links:
+            retryAfter:
+              operationId: retryServiceOperation
+              parameters:
+                retry-time: ""
+              description: Link to retry the service after a certain period
+            serviceStatus:
+              operationRef: /service-status
+              parameters:
+                userId: ""
+              description: Link to check the service status
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  /ping:
+    get:
+      tags:
+        - ping-rest-controller
+      operationId: ping
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PingAPIResponse"
+  /api/v1/users:
+    get:
+      tags:
+        - user-rest-controller-v-1
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDTO"
+  /api/v1/users/{userId}:
+    get:
+      tags:
+        - user-rest-controller-v-1
+      operationId: getUserByUserId
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+  /api/v1/json-placeholder:
+    get:
+      tags:
+        - json-placeholder-controller
+      operationId: getAllPosts
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JsonPostDTO"
+  /api/v1/json-placeholder/{id}:
+    get:
+      tags:
+        - json-placeholder-controller
+      operationId: getPostById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JsonPostDTO"
+components:
+  schemas:
+    SearchOption:
+      type: object
+      properties:
+        field:
+          type: string
+        data: {}
+        searchStrategy:
+          type: string
+          enum:
+            - EQUALS
+            - NOT_EQUALS
+            - LIKE
+            - LESS_THAN
+            - LESS_THAN_OR_EQUALS
+            - GREATER_THAN
+            - GREATER_THAN_OR_EQUALS
+    SearchUsersRequest:
+      type: object
+      properties:
+        searchOptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchOption"
+        sortBy:
+          type: string
+        sortingOrder:
+          type: string
+          enum:
+            - ASC
+            - DESC
+    AddressEntity:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedOn:
+          type: string
+          format: date-time
+        userEntityPK:
+          $ref: "#/components/schemas/UserEntityPK"
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        zipcode:
+          type: string
+        addressType:
+          type: string
+          enum:
+            - PERMANENT
+            - COMMUNICATION
+            - CURRENT
+    BankAccountEntity:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedOn:
+          type: string
+          format: date-time
+        accountUuid:
+          type: string
+          format: uuid
+        accountNo:
+          type: string
+        ifsc:
+          type: string
+        nameAsPerBankAccount:
+          type: string
+        bankName:
+          type: string
+        balance:
+          type: number
+        bankAccountType:
+          type: string
+          enum:
+            - BASIC_SAVINGS
+            - SAVINGS
+            - CURRENT
+            - SALARY
+            - LOAN
+            - OVERDRAFT
+    UserDTO:
+      type: object
+      properties:
+        userEntityPK:
+          $ref: "#/components/schemas/UserEntityPK"
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        gender:
+          type: string
+          enum:
+            - MALE
+            - FEMALE
+            - TRANSGENDER
+            - UNDISCLOSED
+        address:
+          $ref: "#/components/schemas/AddressEntity"
+        bankAccounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/BankAccountEntity"
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedOn:
+          type: string
+          format: date-time
+    UserEntityPK:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+    EnrollmentAddress:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        landmark:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        zipcode:
+          type: string
+        addressType:
+          type: string
+          enum:
+            - PERMANENT
+            - COMMUNICATION
+            - CURRENT
+    EnrollmentRequest:
+      type: object
+      properties:
+        isChallenged:
+          type: boolean
+        isSalaried:
+          type: boolean
+        age:
+          type: string
+          format: byte
+        height:
+          type: integer
+          format: int32
+          maximum: 250
+          minimum: 165
+        weight:
+          type: number
+          format: float
+          maximum: 150.0
+          minimum: 65.0
+        salary:
+          type: number
+          format: double
+          minimum: 10000.0
+        revenue:
+          type: number
+          minimum: 1000000.0
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$"
+        firstName:
+          type: string
+        lastName:
+          type: string
+        gender:
+          type: string
+          enum:
+            - MALE
+            - FEMALE
+            - TRANSGENDER
+            - UNDISCLOSED
+        dob:
+          type: string
+          format: date
+        attendedOn:
+          type: string
+          format: date
+        travellingOn:
+          type: string
+          format: date
+        maturityDate:
+          type: string
+          format: date
+        searchPattern:
+          type: string
+          pattern: .*
+        papers:
+          type: array
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        address:
+          $ref: "#/components/schemas/EnrollmentAddress"
+        ranks:
+          type: array
+          items:
+            type: integer
+            format: int32
+            minimum: 1
+          maxItems: 2147483647
+          minItems: 1
+      required:
+        - address
+        - age
+        - attendedOn
+        - dob
+        - email
+        - firstName
+        - height
+        - isChallenged
+        - isSalaried
+        - maturityDate
+        - papers
+        - password
+        - ranks
+        - revenue
+        - salary
+        - searchPattern
+        - travellingOn
+        - username
+        - weight
+    EnrollmentResponse:
+      type: object
+      properties:
+        isChallenged:
+          type: boolean
+        age:
+          type: string
+          format: byte
+        height:
+          type: integer
+          format: int32
+        weight:
+          type: number
+          format: float
+        salary:
+          type: number
+          format: double
+        revenue:
+          type: number
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        gender:
+          type: string
+          enum:
+            - MALE
+            - FEMALE
+            - TRANSGENDER
+            - UNDISCLOSED
+        dob:
+          type: string
+          format: date
+        attendedOn:
+          type: string
+          format: date
+        travellingOn:
+          type: string
+          format: date
+        maturityDate:
+          type: string
+          format: date
+        searchPattern:
+          type: string
+        papers:
+          type: array
+          items:
+            type: string
+        address:
+          $ref: "#/components/schemas/EnrollmentAddress"
+        ranks:
+          type: array
+          items:
+            type: integer
+            format: int32
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+        properties:
+          type: object
+          additionalProperties: {}
+    PingAPIResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    JsonPostDTO:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        body:
+          type: string
+  securitySchemes:
+    apiKeyScheme:
+      type: apiKey
+      description: API Key Authentication
+      name: apiKeyScheme
+      in: header
+      scheme: ApiKey
+    openidConnectScheme:
+      type: openIdConnect
+      description: OpenID Connect Authentication
+      openIdConnectUrl: https://accounts.google.com/.well-known/openid-configuration
+    basicAuth:
+      type: http
+      description: Basic Authentication Username and Password
+      in: header
+      scheme: basic
+    oauth2Scheme:
+      type: oauth2
+      description: OAuth2 Authentication using Access Token
+      in: header
+      scheme: bearer
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            delete: Grants delete access
+    bearerAuth:
+      type: http
+      description: Bearer Authentication using JWT
+      in: header
+      scheme: bearer
+      bearerFormat: JWT
+    mutualTlsScheme:
+      type: mutualTLS
+      description: Mutual TLS Authentication (client and server both authenticate
+        using certificates)
+      in: header
+      scheme: tls
