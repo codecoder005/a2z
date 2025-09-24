@@ -1,0 +1,47 @@
+### Enrollments API Request
+POST http://localhost:8080/api/v1/enrollments/USA?sortBy=John&sortingOrder=ASC&gender=UNDISCLOSED
+Accept: application/json
+client-id: A1234567
+ip-address: 10.10.10.10
+Content-Type: application/json
+
+{
+  "isChallenged": false,
+  "isSalaried": true,
+  "age": 28,
+  "height": 175,
+  "weight": 72.35,
+  "salary": 55000,
+  "revenue": 2500000,
+  "email": "jane.doe@example.com",
+  "username": "jane_doe",
+  "password": "StrongP@ssw0rd!",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "gender": "FEMALE",
+  "dob": "1995-05-20",
+  "attendedOn": "2025-09-09",
+  "travellingOn": "2035-09-10",
+  "maturityDate": "2075-01-01",
+  "searchPattern": ".*",
+  "papers": [
+    "Learning Dynamics of LLM Fine-tuning — Yi Ren, Danica Sutherland",
+    "SAM 2: Segment Anything in Images and Videos — Nikhila Ravi",
+    "Faster Cascades via Speculative Decoding — Harikrishna Narasimhan",
+    "Transformers Learn Low Sensitivity Functions — Bhavya Vasudeva"
+  ],
+  "address": {
+    "addressLine1": "456 Elm Street",
+    "addressLine2": "Suite 12C",
+    "landmark": "Near City Mall",
+    "city": "Los Angeles",
+    "state": "CA",
+    "country": "USA",
+    "zipcode": "90001",
+    "addressType": "CURRENT"
+  },
+  "ranks": [
+    9,
+    15
+  ]
+}
