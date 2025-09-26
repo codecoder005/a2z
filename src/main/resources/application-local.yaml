@@ -60,10 +60,6 @@ spring:
 
 ## Spring Boot actuator endpoints
 management:
-  tracing:
-    sampling:
-      probability: 1.0
-    enabled: true
   endpoint:
     health:
       show-components: always
@@ -86,6 +82,18 @@ management:
     metrics:
       export:
         enabled: true
+  tracing:
+    enabled: true
+    propagation:
+      type: b3,w3c # Allows both B3 (what Sleuth/Brave traditionally used) and W3C (newer standard). This ensures interop across services.
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+#  zipkin:
+#    tracing:
+#      endpoint: http://localhost:9411/api/v2/spans
 
 logging:
   level:

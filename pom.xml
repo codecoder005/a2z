@@ -76,6 +76,34 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+        <!--Preferred (OTLP exporter + Jaeger collector)-->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
+        </dependency>
+        <!--Direct Jaeger exporter-->
+        <!--<dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-jaeger</artifactId>
+            <version>1.34.1</version>
+        </dependency>-->
+        <!--These 2 dependencies for zipkin-->
+        <!--<dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-reporter-brave</artifactId>
+        </dependency>-->
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
         </dependency>
