@@ -2,27 +2,45 @@ package com.popcorn.a2z.service.impl;
 
 import com.popcorn.a2z.domain.response.JsonPostDTO;
 import com.popcorn.a2z.feignclient.JsonPlaceholderClient;
+import com.popcorn.a2z.feignclient.NanoServiceClient;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class JsonPlaceholderServiceImpl {
     private final JsonPlaceholderClient jsonPlaceholderClient;
+    private final NanoServiceClient nanoServiceClient;
+    private final RestTemplate restTemplate;
 
     @Retry(name = "retry-getAllPosts", fallbackMethod = "getAllPostsFallback")
     @CircuitBreaker(name = "cb-getAllPosts", fallbackMethod = "getAllPostsFallback")
     public Collection<JsonPostDTO> getAllPosts() {
         log.info("JsonPlaceholderServiceImpl::getAllPosts");
         ResponseEntity<Collection<JsonPostDTO>> response = jsonPlaceholderClient.getAllPosts();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        httpHeaders.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<Map> httpEntity = new HttpEntity<>(Map.of("itemIds", List.of("i101", "i987")), httpHeaders);
+        URI uri = URI.create("http://localhost:8081/api/v1/orders");
+        var ordersResponse = restTemplate.postForEntity(uri, httpEntity, Map.class);
+//        var ordersResponse = nanoServiceClient.placeOrder(Map.of("itemIds", List.of("i101", "i987")));
+        log.info("ordersResponse {}", ordersResponse.getBody());
 
         if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
             return response.getBody();

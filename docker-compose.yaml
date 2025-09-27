@@ -26,10 +26,38 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
       - a2z_monitoring
+    depends_on:
+      - prometheus
+
+#  zipkin:
+#    image: openzipkin/zipkin
+#    container_name: zipkin
+#    ports:
+#      - "9411:9411"
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "16686:16686"   # UI
+      - "4317:4317"     # OTLP gRPC
+      - "4318:4318"     # OTLP HTTP
+      - "14269:14269"   # Prometheus scrape endpoint
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://prometheus:9090
+    volumes:
+      - jaeger_data:/data
+    networks:
+      - a2z_monitoring
+    depends_on:
+      - prometheus
 
 volumes:
   prometheus_data:
   grafana_data:
+  jaeger_data:
 
 networks:
   a2z_monitoring:
