@@ -43,6 +43,7 @@
         <modelmapper.version>3.2.4</modelmapper.version>
         <jackson-dataformat-xml.version>2.20.0</jackson-dataformat-xml.version>
         <gson.version>2.13.1</gson.version>
+        <io.opentelemetry.version>1.54.1</io.opentelemetry.version>
 	</properties>
 
     <dependencyManagement>
@@ -104,24 +105,6 @@
             <groupId>io.opentelemetry</groupId>
             <artifactId>opentelemetry-extension-trace-propagators</artifactId>
         </dependency>
-        <!--Enable These 4 dependencies for zipkin-->
-        <!--
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-brave</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-reporter-brave</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-spring-web</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
@@ -149,7 +132,6 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
-
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
