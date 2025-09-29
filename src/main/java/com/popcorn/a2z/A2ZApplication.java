@@ -5,6 +5,7 @@ import com.popcorn.a2z.entity.BankAccountEntity;
 import com.popcorn.a2z.entity.UserEntity;
 import com.popcorn.a2z.entity.UserEntityPK;
 import com.popcorn.a2z.repository.UserRepository;
+import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,30 +33,37 @@ public class A2ZApplication {
     @Profile(value = "!prod")
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
-            var address = AddressEntity.builder().city("New York").addressType(AddressEntity.AddressType.PERMANENT).build();
-            var johnDoeChaseAccount = BankAccountEntity.builder()
-                    .accountNo("5678123456")
-                    .ifsc("CHSE0001005")
-                    .nameAsPerBankAccount("John Doe")
-                    .bankName("Chase Bank")
-                    .balance(BigDecimal.valueOf(12345678.90))
-                    .bankAccountType(BankAccountEntity.BankAccountType.SALARY)
-                    .build();
-            var bankAccounts = List.of(johnDoeChaseAccount);
-            var userJohn = UserEntity.builder()
-                    .userEntityPK(new UserEntityPK())
-                    .username("john.doe")
-                    .firstName("John")
-                    .lastName("Doe")
-                    .email("john.doe@email.com")
-                    .password("password")
-                    .gender(UserEntity.Gender.MALE)
-                    .address(address)
-                    .bankAccounts(bankAccounts)
-                    .build();
-            address.setUser(userJohn);
-            for(var bankAccount: bankAccounts) bankAccount.setUser(userJohn);
-            userRepository.saveAndFlush(userJohn);
+            Faker faker = new Faker();
+            for(int i=10001; i< (10001 + 1000); i++) {
+                String firstName = faker.name().firstName().replaceAll("[^a-zA-Z0-9]", " ");
+                String lastName = faker.name().lastName().replaceAll("[^a-zA-Z0-9]", " ");
+                String fullName = firstName + " " + lastName;
+                String email = (fullName.replaceAll("[^a-zA-Z0-9]", ".")+ "-" + i + "@email.com").toLowerCase();
+                var address = AddressEntity.builder().city("New York").addressType(AddressEntity.AddressType.PERMANENT).build();
+                var johnDoeChaseAccount = BankAccountEntity.builder()
+                        .accountNo("5678123456" + i)
+                        .ifsc("CHSE0001005")
+                        .nameAsPerBankAccount(fullName)
+                        .bankName("Chase Bank")
+                        .balance(BigDecimal.valueOf(12345678.90))
+                        .bankAccountType(BankAccountEntity.BankAccountType.SALARY)
+                        .build();
+                var bankAccounts = List.of(johnDoeChaseAccount);
+                var userJohn = UserEntity.builder()
+                        .userEntityPK(new UserEntityPK())
+                        .username(email.substring(0, email.indexOf("@email.com")))
+                        .firstName(firstName)
+                        .lastName(lastName)
+                        .email(email)
+                        .password("password")
+                        .gender(UserEntity.Gender.MALE)
+                        .address(address)
+                        .bankAccounts(bankAccounts)
+                        .build();
+                address.setUser(userJohn);
+                for(var bankAccount: bankAccounts) bankAccount.setUser(userJohn);
+                userRepository.saveAndFlush(userJohn);
+            }
 
             Optional<List<UserEntity>> permanentAddressUsers = userRepository.findByAddressType(AddressEntity.AddressType.PERMANENT);
             if(permanentAddressUsers.isPresent() && permanentAddressUsers.get().getFirst() != null) {

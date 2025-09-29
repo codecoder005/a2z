@@ -1,14 +1,14 @@
 global:
   scrape_interval: 10s  # scrape every 5 seconds
-  evaluation_interval: 59s  # evaluate rules every 5 secs
+  evaluation_interval: 15s  # evaluate alerting/recording rules every 15 seconds
 
 rule_files:
-  - "one_rule.yml"
+  - "a2z_alerts.yml"
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['host.docker.internal:8080']
+      - targets: ['host.docker.internal:9090']
   - job_name: 'a2z'
     metrics_path: /actuator/prometheus
     scrape_interval: 10s
@@ -16,4 +16,4 @@ scrape_configs:
       - targets: ['host.docker.internal:8080']
   - job_name: 'jaeger'
     static_configs:
-      - targets: ['jaeger:14269']
+      - targets: ['host.docker.internal:14269']
