@@ -1,0 +1,135 @@
+groups:
+  - name: a2z_alerts
+    interval: 15s
+    rules:
+      # 🔹 1. High CPU Usage
+      - alert: HighCPUUsageDetected
+        expr: process_cpu_usage > 0.8
+        for: 2m
+        labels:
+          severity: warning
+          service: a2z
+        annotations:
+          summary: "High CPU Usage on a2z"
+          description: "CPU usage > 80% for more than 2 minutes. Current: {{ $value | humanizePercentage }}"
+
+      # 🔹 2. High Memory Usage
+      - alert: HighMemoryUsageDetected
+        expr: (process_resident_memory_bytes / process_runtime_jvm_memory_max_bytes) > 0.85
+        for: 2m
+        labels:
+          severity: warning
+          service: a2z
+        annotations:
+          summary: "High Memory Usage on a2z"
+          description: "Memory usage > 85% for 2 minutes. Current: {{ $value | humanizePercentage }}"
+
+      # 🔹 3. JVM Heap Almost Full
+      - alert: JVMHeapAlmostFull
+        expr: (jvm_memory_used_bytes{area="heap"} / jvm_memory_max_bytes{area="heap"}) > 0.9
+        for: 3m
+        labels:
+          severity: critical
+          service: a2z
+        annotations:
+          summary: "JVM Heap Nearly Full"
+          description: "JVM heap usage > 90% for 3 minutes. Current: {{ $value | humanizePercentage }}"
+
+      # 🔹 4. Application Down
+      - alert: ApplicationDown
+        expr: up{job="a2z"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: a2z
+        annotations:
+          summary: "a2z Application is Down"
+          description: "Prometheus target for a2z is not responding for > 1m."
+
+      # 🔹 5. High HTTP 5xx Error Rate
+      - alert: HighHttp5xxRate
+        expr: rate(http_server_requests_seconds_count{outcome="SERVER_ERROR",job="a2z"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+          service: a2z
+        annotations:
+          summary: "High HTTP 5xx Error Rate"
+          description: "More than 5% of requests are failing with 5xx in the last 5 minutes."
+
+      # 🔹 6. High HTTP 4xx Error Rate
+      - alert: HighHttp4xxRate
+        expr: rate(http_server_requests_seconds_count{outcome="CLIENT_ERROR",job="a2z"}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: a2z
+        annotations:
+          summary: "High HTTP 4xx Error Rate"
+          description: "More than 10% of requests are failing with 4xx in the last 5 minutes."
+
+      # 🔹 7. Slow Response Times (95th percentile > 2s)
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_server_requests_seconds_bucket{job="a2z"}[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          service: a2z
+        annotations:
+          summary: "High Response Time"
+          description: "95th percentile response time > 2s over last 5 minutes."
+
+      # 🔹 8. Request Rate Drop (possible outage or traffic anomaly)
+      - alert: RequestRateDrop
+        expr: rate(http_server_requests_seconds_count{job="a2z"}[5m]) < 1
+        for: 10m
+        labels:
+          severity: critical
+          service: a2z
+        annotations:
+          summary: "Request Rate Drop Detected"
+          description: "Request rate dropped below 1 req/sec for 10 minutes."
+
+      # 🔹 9. Low Disk Space (requires node_exporter)
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"}) < 0.1
+        for: 10m
+        labels:
+          severity: critical
+          service: a2z
+        annotations:
+          summary: "Low Disk Space"
+          description: "Less than 10% disk space left on {{ $labels.instance }}."
+
+      # 🔹 10. High GC Time
+      - alert: HighGCTime
+        expr: rate(jvm_gc_pause_seconds_sum[5m]) > 1
+        for: 5m
+        labels:
+          severity: warning
+          service: a2z
+        annotations:
+          summary: "High JVM GC Pause Time"
+          description: "GC pauses are taking more than 1 second per minute on average."
+
+      # 🔹 11. DB Connection Pool Exhaustion (HikariCP)
+      - alert: DBConnectionPoolExhausted
+        expr: hikaricp_connections_active / hikaricp_connections_max > 0.9
+        for: 2m
+        labels:
+          severity: critical
+          service: a2z
+        annotations:
+          summary: "HikariCP Connection Pool Exhaustion"
+          description: "Active DB connections > 90% of pool size for 2 minutes."
+
+      # 🔹 12. High Total Request Volume UsersAPI
+      - alert: HighTotalRequestVolume
+        expr: sum(increase(http_server_requests_seconds_count{job="a2z", uri=~"/api/v1/users/.+"}[1m])) > 10000
+        for: 1m
+        labels:
+          severity: critical
+          service: a2z
+        annotations:
+          summary: "High Total Request Volume"
+          description: "Combined traffic to /api/v1/users/{id} exceeded 10,000 requests in the last minute."

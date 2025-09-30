@@ -90,6 +90,8 @@ management:
         enabled: true
   tracing:
     enabled: true
+    propagation:
+      type: w3c
     sampling:
       probability: 1.0
   otlp:
@@ -97,11 +99,6 @@ management:
       endpoint: http://localhost:4318/v1/traces
       export:
         enabled: true
-#  zipkin:
-#    tracing:
-#      endpoint: http://localhost:9411/api/v2/spans
-#      export:
-#        enabled: true
 
 logging:
   level:

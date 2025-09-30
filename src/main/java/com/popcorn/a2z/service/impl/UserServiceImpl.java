@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserByUserId(Long userId) {
-        log.info("UserServiceImpl::getUserByUserId");
+        log.info("UserServiceImpl::getUserByUserId {}", userId);
         return userRepository.findById(new UserEntityPK(userId))
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .orElseThrow(() -> new UserNotFoundException("No user found with userId: " + userId));

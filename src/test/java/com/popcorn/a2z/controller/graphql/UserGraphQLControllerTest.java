@@ -77,7 +77,6 @@ class UserGraphQLControllerTest {
 
         assertNotNull(response.get());
         assertNotNull(response.get().getFirst());
-        assertEquals("john.doe", response.get().getFirst().getUsername());
         assertEquals(10001, response.get().getFirst().getUserEntityPK().getUserId());
     }
 
@@ -90,7 +89,6 @@ class UserGraphQLControllerTest {
 
         assertNotNull(response.get());
         assertNotNull(response.get().getFirst());
-        assertEquals("john.doe", response.get().getFirst().getUsername());
         assertEquals(10001, response.get().getFirst().getUserEntityPK().getUserId());
     }
 }

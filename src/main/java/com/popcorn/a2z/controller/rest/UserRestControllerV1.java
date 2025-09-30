@@ -24,7 +24,7 @@ public class UserRestControllerV1 implements UserRestAPI, UserRestAPIDocx {
 
     @Override
     public ResponseEntity<UserDTO> getUserByUserId(Long userId) {
-        log.info("UserRestControllerV1::getUserByUserId");
+        log.info("UserRestControllerV1::getUserByUserId {}", userId);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getUserByUserId(userId));
