@@ -12,7 +12,6 @@ spring:
             connectTimeout: 2000   # ms
             readTimeout: 5000      # ms
             loggerLevel: FULL      # NONE, BASIC, HEADERS, FULL
-
   graphql:
     graphiql:
       enabled: true        # Enable GraphiQL UI
@@ -25,9 +24,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-#        format_sql: true
+        format_sql: true
     database: default
-#    show-sql: true
+    show-sql: true
     hibernate:
       ddl-auto: create
   datasource:
@@ -38,6 +37,7 @@ spring:
     password: sa
     hikari:
       pool-name: A2ZHikariPool
+      register-mbeans: true
       maximum-pool-size: 64 # Tuned based on DB server cores
       minimum-idle: 32     # Half of max pool size for a balance
       connection-timeout: 5000 # Shorten to fail fast (5 seconds)

@@ -33,7 +33,7 @@
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults">
+          <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
             <stringProp name="HTTPSampler.domain">localhost</stringProp>
             <stringProp name="HTTPSampler.port">8080</stringProp>
             <stringProp name="HTTPSampler.path">/api/v1/users/${userId}</stringProp>
@@ -43,7 +43,7 @@
             <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
           </ConfigTestElement>
           <hashTree/>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
@@ -101,7 +101,7 @@
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
+          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -138,7 +138,7 @@
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
+          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -225,7 +225,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/api/v1/users">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/api/v1/users" enabled="true">
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
@@ -240,7 +240,7 @@
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
@@ -249,19 +249,19 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
+          <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
             <collectionProp name="CookieManager.cookies"/>
             <boolProp name="CookieManager.clearEachIteration">false</boolProp>
             <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
           </CookieManager>
           <hashTree/>
-          <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager">
+          <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager" enabled="true">
             <boolProp name="clearEachIteration">false</boolProp>
             <boolProp name="useExpires">true</boolProp>
             <boolProp name="CacheManager.controlledByThread">false</boolProp>
           </CacheManager>
           <hashTree/>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -298,7 +298,7 @@
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
+          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -335,7 +335,7 @@
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
+          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -372,7 +372,7 @@
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+          <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>

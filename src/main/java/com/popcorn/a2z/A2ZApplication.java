@@ -9,6 +9,7 @@ import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -31,6 +32,7 @@ public class A2ZApplication {
 
     @Bean
     @Profile(value = "!prod")
+    @ConditionalOnProperty(prefix = "spring.jpa.hibernate.ddl-auto", value = "create")
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
             Faker faker = new Faker();

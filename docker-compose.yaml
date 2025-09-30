@@ -1,4 +1,52 @@
 services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_prod
+    environment:
+      POSTGRES_DB: a2zdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d a2zdb -h localhost -p 5432" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - a2z_monitoring
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: postgres_exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:password@postgres:5432/a2zdb?sslmode=disable"
+    ports:
+      - "9187:9187"
+    networks:
+      - a2z_monitoring
+    depends_on:
+      - postgres
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_prod
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - a2z_monitoring
+  
   prometheus:
     image: prom/prometheus:latest
     ports:
@@ -29,12 +77,6 @@ services:
     depends_on:
       - prometheus
 
-#  zipkin:
-#    image: openzipkin/zipkin
-#    container_name: zipkin
-#    ports:
-#      - "9411:9411"
-
   jaeger:
     image: jaegertracing/all-in-one:latest
     container_name: jaeger
@@ -58,6 +100,8 @@ volumes:
   prometheus_data:
   grafana_data:
   jaeger_data:
+  postgres_data:
+  pgadmin_data:
 
 networks:
   a2z_monitoring:

@@ -1,4 +1,17 @@
 spring:
+  cloud:
+    openfeign:
+      client:
+        refresh-enabled: true
+        config:
+          json-placeholder-client:
+            connectTimeout: 2000   # ms
+            readTimeout: 5000      # ms
+            loggerLevel: FULL      # NONE, BASIC, HEADERS, FULL
+          nano-service-client:
+            connectTimeout: 2000   # ms
+            readTimeout: 5000      # ms
+            loggerLevel: FULL      # NONE, BASIC, HEADERS, FULL
   graphql:
     graphiql:
       enabled: true        # Enable GraphiQL UI
@@ -10,37 +23,72 @@ spring:
     generate-ddl: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        format_sql: false
-    database: default
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    database: postgresql
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
-    generate-unique-name: false
-    url: jdbc:h2:mem:a2zdb?DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: sa
-  h2:
-    console:
+    url: jdbc:postgresql://localhost:5432/a2zdb   # Replace with your Postgres host/port/db
+    driver-class-name: org.postgresql.Driver
+    username: postgres                              # Replace with your Postgres user
+    password: password           # Replace with your Postgres password
+    hikari:
+      pool-name: A2ZPostgresHikariPool
+      register-mbeans: true
+      maximum-pool-size: 64        # Tune based on DB cores and expected load
+      minimum-idle: 32             # Half of max pool size is reasonable
+      connection-timeout: 5000     # Fail fast if no connection available
+      idle-timeout: 600000         # 10 minutes
+      max-lifetime: 1770000        # ~29.5 minutes
+      leak-detection-threshold: 30000  # 30 seconds
+      validation-timeout: 5000
+      connection-test-query: "SELECT 1"
+      auto-commit: false
+      read-only: false
+      isolate-internal-queries: true
+  docker:
+    compose:
       enabled: true
-      settings:
-        web-allow-others: true
+      lifecycle-management: start_only
 
 ## Spring Boot actuator endpoints
 management:
-  tracing:
-    sampling:
-      probability: 1.0
   endpoint:
     health:
       show-components: always
       show-details: always
+      access: unrestricted
+    circuitbreakers:
+      enabled: true
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
   endpoints:
     web:
       exposure:
         include: '*'
+  health:
+    circuitbreakers:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+      export:
+        enabled: true
+
 logging:
   level:
     org:
