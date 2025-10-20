@@ -73,5 +73,4 @@ public class A2ZApplication {
             }
         };
     }
-
 }
