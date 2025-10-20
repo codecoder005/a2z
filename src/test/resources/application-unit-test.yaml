@@ -15,3 +15,8 @@ spring:
         format_sql: true
     database: default
     show-sql: true
+
+application:
+  jpa:
+    fake-data:
+      max-limit: 10
