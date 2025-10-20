@@ -100,6 +100,11 @@ management:
       export:
         enabled: true
 
+application:
+  jpa:
+    fake-data:
+      max-limit: 1000
+
 logging:
   level:
     org:
