@@ -5,6 +5,7 @@ import com.popcorn.a2z.entity.BankAccountEntity;
 import com.popcorn.a2z.entity.UserEntity;
 import com.popcorn.a2z.entity.UserEntityPK;
 import com.popcorn.a2z.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +26,7 @@ import java.util.Optional;
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableFeignClients
 @EnableScheduling
+@Slf4j
 public class A2ZApplication {
 
 	public static void main(String[] args) {
@@ -33,9 +35,11 @@ public class A2ZApplication {
 
     @Bean
     @Profile(value = {"local", "dev", "unit-test"})
-    @ConditionalOnProperty(prefix = "spring.jpa.hibernate", name = "ddl-auto", havingValue = "create")
+    @ConditionalOnProperty(prefix = "spring.jpa.hibernate", name = "ddl-auto", havingValue = "update")
     CommandLineRunner commandLineRunner(UserRepository userRepository, @Value("${application.jpa.fake-data.max-limit:10}") final Integer maxLimit) {
         return args -> {
+            userRepository.deleteAll();
+            log.info("Inserting {} fake records", maxLimit);
             Faker faker = new Faker();
             for(int i=10001; i< (10001 + maxLimit); i++) {
                 String firstName = faker.name().firstName().replaceAll("[^a-zA-Z0-9]", " ");
