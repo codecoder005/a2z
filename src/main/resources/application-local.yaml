@@ -61,8 +61,8 @@ spring:
         web-allow-others: true
   docker:
     compose:
-      enabled: false
-      lifecycle-management: none
+      enabled: true
+      lifecycle-management: start_only
 
 ## Spring Boot actuator endpoints
 management:
