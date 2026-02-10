@@ -38,6 +38,7 @@
 
 	<properties>
 		<java.version>25</java.version>
+        <maven.compiler.release>25</maven.compiler.release>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.8.15</springdoc-openapi-starter-webmvc-ui.version>
         <modelmapper.version>3.2.6</modelmapper.version>
@@ -218,9 +219,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.3</version>
+                <version>3.12.0</version>
                 <configuration>
-                    <release>21</release>
+                    <release>25</release>
                     <excludePackageNames>com.popcorn.a2z.config.*</excludePackageNames>
                     <failOnError>false</failOnError>
                 </configuration>
