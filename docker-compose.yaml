@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - C:\Users\ramak\Docker\a2z\postgres\postgres_data:/var/lib/postgresql/data
+      - C:\Users\ramak\Docker\a2z\postgres\postgres_data:/var/lib/postgresql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres -d a2zdb -h localhost -p 5432" ]
       interval: 15s

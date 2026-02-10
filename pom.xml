@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.6</version>
+		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.popcorn</groupId>
@@ -37,13 +37,14 @@
     </scm>
 
 	<properties>
-		<java.version>21</java.version>
+		<java.version>25</java.version>
+        <maven.compiler.release>25</maven.compiler.release>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
-        <springdoc-openapi-starter-webmvc-ui.version>2.8.13</springdoc-openapi-starter-webmvc-ui.version>
-        <modelmapper.version>3.2.5</modelmapper.version>
-        <jackson-dataformat-xml.version>2.20.0</jackson-dataformat-xml.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.8.15</springdoc-openapi-starter-webmvc-ui.version>
+        <modelmapper.version>3.2.6</modelmapper.version>
+        <jackson-dataformat-xml.version>2.20.2</jackson-dataformat-xml.version>
         <gson.version>2.13.2</gson.version>
-        <datafaker.version>2.5.1</datafaker.version>
+        <datafaker.version>2.5.3</datafaker.version>
         <io.opentelemetry.version>1.54.1</io.opentelemetry.version>
 	</properties>
 
@@ -218,9 +219,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.3</version>
+                <version>3.12.0</version>
                 <configuration>
-                    <release>21</release>
+                    <release>25</release>
                     <excludePackageNames>com.popcorn.a2z.config.*</excludePackageNames>
                     <failOnError>false</failOnError>
                 </configuration>
