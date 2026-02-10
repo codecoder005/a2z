@@ -3,6 +3,7 @@ package com.popcorn.a2z.domain.response;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -44,4 +45,5 @@ public class PingAPIResponse {
     private Integer status;
     private String message;
     private LocalDateTime timestamp;
+    private List<String> serverIPs;
 }
