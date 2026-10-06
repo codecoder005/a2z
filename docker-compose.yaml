@@ -78,19 +78,20 @@ services:
       - prometheus
 
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/jaeger:2.22.0
     container_name: jaeger
+    command: [ "--config", "/etc/jaeger/config.yaml" ]
+    volumes:
+      - .\src\main\resources\jaeger\jaeger-config.yaml:/etc/jaeger/config.yaml:ro
+      - C:\Users\ramak\Docker\a2z\jaeger\jaeger_data:/data
     ports:
       - "16686:16686"   # UI
+      - "16687:16687"   # Not Sure
       - "4317:4317"     # OTLP gRPC
       - "4318:4318"     # OTLP HTTP
-      - "14269:14269"   # Prometheus scrape endpoint
+      - "8889:8889"     # spanmetrics exposed for Prometheus
     environment:
-      - COLLECTOR_OTLP_ENABLED=true
-      - METRICS_STORAGE_TYPE=prometheus
-      - PROMETHEUS_SERVER_URL=http://prometheus:9090
-    volumes:
-      - C:\Users\ramak\Docker\a2z\jaeger\jaeger_data:/data
+      - LOG_LEVEL=debug
     networks:
       - a2z_monitoring
     depends_on:

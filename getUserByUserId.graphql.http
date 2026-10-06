@@ -1,0 +1,29 @@
+###
+POST http://localhost:8080/graphql
+Accept-Language: en-US,en;q=0.9,te;q=0.8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Origin: http://localhost:8080
+Pragma: no-cache
+Referer: http://localhost:8080/graphiql?path=/graphql
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+accept: application/json, multipart/mixed
+sec-ch-ua: "Not;A=Brand";v="8", "Chromium";v="150", "Google Chrome";v="150"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Content-Type: application/json
+
+{
+  "query": "query getUserByUserId($userId: Int!) { users { getUserByUserId(userId: $userId) { ...userDTOFragment } } } fragment userDTOFragment on UserDTO { userEntityPK { userId } username email firstName gender lastName password createdBy createdOn updatedBy updatedOn bankAccounts { accountUuid accountNo ifsc nameAsPerBankAccount bankName bankAccountType balance createdBy createdOn updatedBy updatedOn } address { userEntityPK { userId } city state country zipcode addressType createdBy createdOn updatedBy updatedOn } }",
+  "variables": {
+    "userId": 10001
+  },
+  "operationName": "getUserByUserId"
+}
+
+###
