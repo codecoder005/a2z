@@ -50,7 +50,7 @@ spring:
       isolate-internal-queries: true
   docker:
     compose:
-      enabled: true
+      enabled: false
       lifecycle-management: start_only
 
 ## Spring Boot actuator endpoints
