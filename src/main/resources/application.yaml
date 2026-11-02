@@ -38,6 +38,8 @@ resilience4j:
         baseConfig: default
       cb-getPostById:
         baseConfig: default
+    metrics:
+      enabled: true
   retry:
     configs:
       default:
@@ -61,3 +63,5 @@ resilience4j:
         baseConfig: default
       retry-getPostById:
         baseConfig: default
+    metrics:
+      enabled: true
