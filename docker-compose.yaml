@@ -78,7 +78,7 @@ services:
       - prometheus
 
   jaeger:
-    image: jaegertracing/jaeger:2.22.0
+    image: jaegertracing/jaeger:2.23.0
     container_name: jaeger
     command: [ "--config", "/etc/jaeger/config.yaml" ]
     volumes:
