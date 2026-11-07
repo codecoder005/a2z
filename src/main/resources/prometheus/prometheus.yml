@@ -14,9 +14,12 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets: ['host.docker.internal:8080']
-  - job_name: 'jaeger'
+#  - job_name: 'jaeger'
+#    static_configs:
+#      - targets: ['host.docker.internal:14269']
+  - job_name: jaeger-spanmetrics
     static_configs:
-      - targets: ['host.docker.internal:14269']
+      - targets: [ "jaeger:8889" ]
   - job_name: 'postgres'
     static_configs:
       - targets: [ 'postgres_exporter:9187' ]

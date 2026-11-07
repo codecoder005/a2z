@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -22,7 +21,6 @@ import java.util.Map;
 public class JsonPlaceholderServiceImpl {
     private final JsonPlaceholderClient jsonPlaceholderClient;
     private final NanoServiceClient nanoServiceClient;
-    private final RestTemplate restTemplate;
 
     @Retry(name = "retry-getAllPosts", fallbackMethod = "getAllPostsFallback")
     @CircuitBreaker(name = "cb-getAllPosts", fallbackMethod = "getAllPostsFallback")

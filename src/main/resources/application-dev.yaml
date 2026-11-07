@@ -50,7 +50,7 @@ spring:
       isolate-internal-queries: true
   docker:
     compose:
-      enabled: true
+      enabled: false
       lifecycle-management: start_only
 
 ## Spring Boot actuator endpoints
@@ -78,16 +78,19 @@ management:
       export:
         enabled: true
   tracing:
-    enabled: true
     propagation:
       type: w3c
     sampling:
       probability: 1.0
-  otlp:
-    tracing:
-      endpoint: http://localhost:4318/v1/traces
-      export:
+    export:
+      enabled: true
+      otlp:
         enabled: true
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: http://localhost:4318/v1/traces
 
 #server:
 #  port: 8443

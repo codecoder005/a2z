@@ -3,9 +3,10 @@ package com.popcorn.a2z.controller.graphql;
 import com.popcorn.a2z.domain.response.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
+import org.springframework.boot.graphql.test.autoconfigure.tester.AutoConfigureHttpGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.graphql.test.tester.GraphQlTester;
+import org.springframework.graphql.test.tester.HttpGraphQlTester;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ActiveProfiles(profiles = {"unit-test"})
-@AutoConfigureGraphQlTester
+@AutoConfigureHttpGraphQlTester
 class UserGraphQLControllerTest {
     @Autowired
-    private GraphQlTester graphQlTester;
+    private HttpGraphQlTester graphQlTester;
 
     @Test
     void testUsersQueryGetAllUsers() {
