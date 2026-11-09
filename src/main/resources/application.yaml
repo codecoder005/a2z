@@ -65,3 +65,7 @@ resilience4j:
         baseConfig: default
     metrics:
       enabled: true
+
+scalar:
+  enabled: true
+  actuator-enabled: true

@@ -29,7 +29,7 @@ import java.util.Optional;
 @Slf4j
 public class A2ZApplication {
 
-	public static void main(String[] args) {
+	static void main(String[] args) {
 		SpringApplication.run(A2ZApplication.class, args);
 	}
 

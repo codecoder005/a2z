@@ -87,8 +87,6 @@ services:
     ports:
       - "16686:16686"   # UI
       - "16687:16687"   # Not Sure
-      - "4317:4317"     # OTLP gRPC
-      - "4318:4318"     # OTLP HTTP
       - "8889:8889"     # spanmetrics exposed for Prometheus
     environment:
       - LOG_LEVEL=debug
@@ -96,6 +94,20 @@ services:
       - a2z_monitoring
     depends_on:
       - prometheus
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    command: [ "--config=/etc/otelcol-contrib/config.yaml" ]
+    volumes:
+      - .\src\main\resources\otel\otel-collector.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "4317:4317"     # OTLP gRPC
+      - "4318:4318"     # OTLP HTTP
+    networks:
+      - a2z_monitoring
+    depends_on:
+      - jaeger
 
 volumes:
   prometheus_data:
