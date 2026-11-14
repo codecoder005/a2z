@@ -69,3 +69,7 @@ resilience4j:
 scalar:
   enabled: true
   actuator-enabled: true
+
+feign:
+  logging:
+    enabled: true
