@@ -23,53 +23,58 @@ class UserGraphQLControllerTest {
     void testUsersQueryGetAllUsers() {
         //language=GraphQL
         String auth_register = """
-        query getAllUsers {
-          users {
-            getAllUsers {
-              userEntityPK {
-                userId
-              }
-              username
-              email
-              firstName
-              gender
-              lastName
-              password
-              createdBy
-              createdOn
-              updatedBy
-              updatedOn
-              bankAccounts {
-                accountUuid
-                accountNo
-                ifsc
-                nameAsPerBankAccount
-                bankName
-                bankAccountType
-                balance
-                createdBy
-                createdOn
-                updatedBy
-                updatedOn
-              }
-              address {
-                userEntityPK {
-                  userId
+                
+                query getAllUsers {
+                  users {
+                    getAllUsers {
+                      ...userDTOFragment
+                    }
+                  }
                 }
-                city
-                state
-                country
-                zipcode
-                addressType
-                createdBy
-                createdOn
-                updatedBy
-                updatedOn
-              }
-            }
-          }
-        }
-        """;
+                
+                fragment userDTOFragment on UserDTO {
+                  userEntityPK {
+                    userId
+                  }
+                  username
+                  email
+                  firstName
+                  gender
+                  lastName
+                  password
+                  createdBy
+                  createdOn
+                  updatedBy
+                  updatedOn
+                  bankAccounts {
+                    accountUuid
+                    accountNo
+                    ifsc
+                    nameAsPerBankAccount
+                    bankName
+                    bankAccountType
+                    balance
+                    createdBy
+                    createdOn
+                    updatedBy
+                    updatedOn
+                  }
+                  address {
+                    userEntityPK {
+                      userId
+                    }
+                    city
+                    state
+                    country
+                    zipcode
+                    addressType
+                    createdBy
+                    createdOn
+                    updatedBy
+                    updatedOn
+                  }
+                }
+                """;
 
         GraphQlTester.EntityList<UserDTO> response = graphQlTester.document(auth_register)
                 .execute()
